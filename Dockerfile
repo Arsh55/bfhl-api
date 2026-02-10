@@ -1,20 +1,16 @@
 
-FROM eclipse-temurin:17-jdk
-
+FROM maven:3.9.6-eclipse-temurin-17
 
 WORKDIR /app
 
 
 COPY . .
 
+# Build the application
+RUN mvn clean package -DskipTests
 
-RUN chmod +x mvnw
-
-
-RUN ./mvnw clean package -DskipTests
-
-
+# Expose port
 EXPOSE 8080
 
-
-CMD ["java", "-jar", "target/*.jar"]
+# Run the Spring Boot jar
+CMD ["java", "-jar", "target/bfhl-0.0.1-SNAPSHOT.jar"]
